@@ -3,353 +3,32 @@ plotsoutputUI <- function(id) {
 
   tagList(fluidRow(
     box(
-      column(
-        4,
-        numericInput(
-          ns('outb_Thhold'),
-          'Probability to have at least n nosocomial infection:',
-          value = 1,
-          min = 0,
-          step = 1
-        ),
-        checkboxInput(
-          ns("pOBlegcol"),
-          "Limit the number of colors in the legend",
-          value = FALSE
-        ),
-        conditionalPanel(
-          condition =
-            paste0('input[\'', ns('pOBlegcol'), "\'] == 1"),
-          sliderInput(
-            ns('nlegcolpOB'),
-            'Number of colors in the legend:',
-            value = 5,
-            min = 2,
-            max = 10,
-            step = 1
-          )
-        ),
-        hr(),
-        checkboxInput(ns("pOBoptions"),
-                      "Layout options",
-                      value = FALSE),
-        conditionalPanel(
-          condition =
-            paste0('input[\'', ns('pOBoptions'), "\'] == 1"),
-          selectInput(
-            ns('pOBlayout'),
-            "Layout",
-            c(
-              "as_star",
-              "as_tree",
-              "in_circle",
-              "nicely",
-              "on_grid",
-              "on_sphere",
-              "randomly",
-              "with_dh",
-              "with_fr",
-              "with_gem",
-              "with_graphopt",
-              "with_kk",
-              "with_lgl",
-              "with_mds",
-              "with_sugiyama"
-            ),
-            selected = "with_fr"
-          ),
-          sliderInput(
-            ns('pOBvertexsize'),
-            'Size of the wards:',
-            value = 0.5,
-            min = 0.1,
-            max = 1,
-            step = 0.1
-          ),
-          sliderInput(
-            ns('pOBvertexlabelsize'),
-            'Size of the names:',
-            value = 0.03,
-            min = 0.01,
-            max = 0.1,
-            step = 0.01
-          ),
-          sliderInput(
-            ns('pOBedgearrowsize'),
-            'Size of the arrows:',
-            value = 0.4,
-            min = 0.1,
-            max = 1,
-            step = 0.1
-          ),
-          conditionalPanel(
-            condition =
-              paste0('input[\'', ns('formatP1'), "\'] == \"png\""),
-            column(6,
-            sliderInput(
-              ns('widthP1'),
-              'Width (px):',
-              value = 1500,
-              min = 500,
-              max = 2000,
-              step = 50
-            )),
-            column(6,
-            sliderInput(
-              ns('heightP1'),
-              'Height (px):',
-              value = 1100,
-              min = 500,
-              max = 2000,
-              step = 50
-            )))
-        ),
-        radioButtons(
-          inputId = ns("formatP1"),
-          label = "Select the file type",
-          choices = list("png", "pdf")
-        ),
-        downloadButton(outputId = ns("down_pOutbreak"), label = "Download the plot")
-      ),
-      column(8,
-             plotOutput(ns("pOutbreak")))
+      title =  h2("Nosocomial hazard", align="center"),
+      plotOutput(ns("nosoHazard")),
+
+      downloadButton(outputId = ns("down_nosoHazard"), label = "Download the plot"),
+      align = "center"
     ),
     box(
-      column(
-        4,
-        checkboxInput(
-          ns("nosolegcol"),
-          "Limit the number of colors in the legend",
-          value = FALSE
-        ),
-        conditionalPanel(
-          condition =
-            paste0('input[\'', ns('nosolegcol'), "\'] == 1"),
-          sliderInput(
-            ns('nlegcolnosoHaza'),
-            'Number of colors in the legend:',
-            value = 5,
-            min = 2,
-            max = 10,
-            step = 1
-          )
-        ),
-        hr(),
-        checkboxInput(ns("nosoHazaoptions"),
-                      "Layout options",
-                      value = FALSE),
-        conditionalPanel(
-          condition =
-            paste0('input[\'', ns('nosoHazaoptions'), "\'] == 1"),
-          selectInput(
-            inputId = ns('nosoHazalayout'),
-            label = "Layout",
-            choices = c(
-              "as_star",
-              "as_tree",
-              "in_circle",
-              "nicely",
-              "on_grid",
-              "on_sphere",
-              "randomly",
-              "with_dh",
-              "with_fr",
-              "with_gem",
-              "with_graphopt",
-              "with_kk",
-              "with_lgl",
-              "with_mds",
-              "with_sugiyama"
-            ),
-            selected = "with_fr"
-          ),
-          sliderInput(
-            ns('nosoHazavertexsize'),
-            'Size of the wards:',
-            value = 0.5,
-            min = 0.1,
-            max = 1,
-            step = 0.1
-          ),
-          sliderInput(
-            ns('nosoHazavertexlabelsize'),
-            'Size of the names:',
-            value = 0.03,
-            min = 0.01,
-            max = 0.1,
-            step = 0.01
-          ),
-          sliderInput(
-            ns('nosoHazaedgearrowsize'),
-            'Size of the arrows:',
-            value = 0.4,
-            min = 0.1,
-            max = 1,
-            step = 0.1
-          ),
-          conditionalPanel(
-            condition =
-              paste0('input[\'', ns('formatP2'), "\'] == \"png\""),
-            column(6,
-                   sliderInput(
-                     ns('widthP2'),
-                     'Width (px):',
-                     value = 1500,
-                     min = 500,
-                     max = 2000,
-                     step = 50
-                   )),
-            column(6,
-                   sliderInput(
-                     ns('heightP2'),
-                     'Height (px):',
-                     value = 1100,
-                     min = 500,
-                     max = 2000,
-                     step = 50
-                   )))
-        ),
-        radioButtons(
-          inputId = ns("formatP2"),
-          label = "Select the file type",
-          choices = list("png", "pdf")
-        ),
-        downloadButton(outputId = ns("down_nosoHazard"), label = "Download the plot")
-      ),
-      column(8,
-             # div(style = "display: inline-block;vertical-align:top;",
-             plotOutput(ns("nosoHazard")))
+      title =  h2("Daily cases over the entire facility", align="center"),
+      footer = "29 wards, 500 patients and 900 healthcare workers. Four stochastic simulations are illustrated here among the 50. The orange shadow is the 95% prediction interval estimated from the 50 simulations.",
+      plotOutput(ns("plotIncidence3")),
+      downloadButton(outputId = ns("down_Incidence"), label = "Download the plot"),
+      align = "center"
     ),
     box(
-      column(
-        4,
-        selectInput(
-          inputId = ns("scaleInc"),
-          label = "Display incidence for (scale):",
-          choices = c("The whole facility" = 0,
-                      "Each ward" = 1),
-          selected = FALSE
-        ),
-        conditionalPanel(
-          condition =
-            paste0('input[\'', ns('scaleInc'), "\'] == 1"),
-          checkboxInput(
-            inputId = ns("wardInc"),
-            label = "Display incidence for a specific ward",
-            value = FALSE,
-            width = NULL
-          ),
-          conditionalPanel(condition =
-                             paste0('input[\'', ns('wardInc'), "\'] == 1"),
-                           uiOutput(ns("ward_choiceInc")))
-        ),
-        selectInput(
-          inputId = ns("popInc"),
-          label = "Display incidence for (population):",
-          choices = c(
-            "Both: patients and professionals" = "P+H",
-            "Patients" = "P",
-            "Professionals" = "H"
-          ),
-          selected = FALSE
-        ),
-        conditionalPanel(
-          condition =
-            paste0('input[\'', ns('iterInc'), "\'] == 0"),
-          checkboxInput(
-            inputId = ns("display_sdInc"),
-            label = "Display standard deviation",
-            value = FALSE,
-            width = NULL
-          )
-        ),
-        checkboxInput(
-          inputId = ns("iterInc"),
-          label = "Display incidence for only one simulation",
-          value = FALSE,
-          width = NULL
-        ),
-        conditionalPanel(condition =
-                           paste0('input[\'', ns('iterInc'), "\'] == 1"),
-                         uiOutput(ns("iter_choiceInc"))),
-        hr(),
-        radioButtons(
-          inputId = ns("formatP3"),
-          label = "Select the file type",
-          choices = list("png", "pdf")
-        ),
-        downloadButton(outputId = ns("down_Incidence"), label = "Download the plot")
-      ),
-      column(8,
-             plotOutput(ns("plotIncidence")))
+      title =  h2("Daily number of tests", align="center"),
+      plotOutput(ns("plottest")),
+      downloadButton(outputId = ns("down_nTest"), label = "Download the plot"),
+      align = "center"
+
     ),
     box(
-      column(
-        4,
-        selectInput(
-          inputId = ns("scaleTest"),
-          label = "Display number of tests for (scale):",
-          choices = c("The whole facility" = 0,
-                      "Each ward" = 1),
-          selected = FALSE
-        ),
-        conditionalPanel(
-          condition =
-            paste0('input[\'', ns('scaleTest'), "\'] == 1"),
-          checkboxInput(
-            inputId = ns("wardTest"),
-            label = "Display number of tests for a specific ward",
-            value = FALSE,
-            width = NULL
-          ),
-          conditionalPanel(condition =
-                             paste0('input[\'', ns('wardTest'), "\'] == 1"),
-                           uiOutput(ns(
-                             "ward_choiceTest"
-                           )))
-        ),
-        selectInput(
-          inputId = ns("popTest"),
-          label = "Display number of tests for (population):",
-          choices = c(
-            "Both: patients and professionals" = "P+H",
-            "Patients" = "P",
-            "Professionals" = "H"
-          ),
-          selected = FALSE
-        ),
-        checkboxInput(
-          inputId = ns("iterTest"),
-          label = "Display number of tests for only one simulation",
-          value = FALSE,
-          width = NULL
-        ),
-        conditionalPanel(condition =
-                           paste0('input[\'', ns('iterTest'), "\'] == 1"),
-                         uiOutput(ns(
-                           "iter_choiceTest"
-                         ))),
-        checkboxInput(
-          inputId = ns("agrtest"),
-          label = "Median over aggregated period",
-          value = FALSE,
-          width = NULL
-        ),
-        conditionalPanel(condition =
-                           paste0('input[\'', ns('agrtest'), "\'] == 1"),
-                         uiOutput(ns(
-                           "daysint_choiceTest"
-                         ))),
-        hr(),
-        radioButtons(
-          inputId = ns("formatP4"),
-          label = "Select the file type",
-          choices = list("png", "pdf")
-        ),
-        downloadButton(outputId = ns("down_nTest"), label = "Download the plot")
-      ),
-      column(8,
-             plotOutput(ns("plottest")))
+      title =  h2("Peak incidence by service", align="center"),
+      footer = "For each population, the five highest peaks are displayed in color.",
+      plotOutput(ns("pPeak")),
+      downloadButton(outputId = ns("down_pPeak"), label = "Download the plot"),
+      align = "center"
     )
   ))
 }
@@ -359,86 +38,139 @@ plotsoutput <-
            output,
            session,
            model,
-           variable,
            ndays) {
     # model()
     ns <- session$ns
 
     #########
-    ######### Network plot
+    ######### Peak incidence plot
     #########
 
-    mypOutbreak <- function() {
-      if (input$pOBlegcol == 1)
-        maxcolors <- input$nlegcolpOB
-      else
-        maxcolors <- FALSE
+    mypPeak <- function() {
+      simple_plot_peak = function(trajmwss) {
+        n_it <- seq(length(trajmwss))
 
-      plot_pOutbreak(
-        trajmwss = model(),
-        pop_size_P = variable$pop_size_P,
-        matContact = variable$matContact,
-        outb_Thhold = input$outb_Thhold,
-        layout = input$pOBlayout,
-        vertexsize = input$pOBvertexsize,
-        vertexlabelsize = input$pOBvertexlabelsize,
-        edgearrowsize = input$pOBedgearrowsize,
-        maxcolors = maxcolors,
-        addtitle = TRUE,
-        verbose = FALSE
-      )
+        # add iteration
+        trajmwss <- lapply(n_it, function(sim) {
+          trajmwss[[sim]][, `:=`(iteration = sim)]
+          trajmwss[[sim]]
+        })
+
+        # group into unique data.table
+        trajmwss %<>% do.call(rbind, .)
+
+        #  cummulative daily incidence per node per iteration
+        trajmwss[, `:=`(incP = (sum(incPA, incPM,  incPS)),
+                        incH = (sum(incHA, incHM, incHS))),
+                 by = c("iteration", "time", "node")]
+
+        #  daily incidence per node per iteration
+        trajmwss[, `:=`(d_incP = diff(c(0,incP)),
+                        d_incH = diff(c(0,incH))),
+                 by = c("node", "iteration")]
+
+        #  remove unused columns
+        trajmwss %<>% .[, c("time","node", "iteration", "d_incP", "d_incH"), with=FALSE]
+
+
+        #  renames variables
+        setnames(trajmwss, "d_incP", "Patients")
+        setnames(trajmwss, "d_incH", "Healthcare workers")
+
+        #  remove unused columns
+        trajmwss %<>% melt(., id.vars = c("time" , "node" , "iteration"))
+        # select maximal incidence in each node for each simulation
+        trajmwss[, `:=`(maxInc = max(value)),
+                 by = c("node", "variable", "iteration")]
+
+        trajmwss %<>% unique
+        trajmwss %<>% .[, c("node", "variable", "maxInc"), with=FALSE]
+
+        # calculate mean peak and sd per node over all simulations
+        trajmwss[, `:=`(mean = mean(maxInc),
+                        sd = sd(maxInc)),
+                 by = c("node", "variable")]
+
+        trajmwss %<>% .[, c("node", "variable","mean","sd"), with=FALSE]
+        trajmwss %<>% unique
+
+        p <- ggplot(trajmwss) +
+          facet_wrap(~variable) +
+          geom_col(aes(node, mean), fill = "grey", position = "dodge") +
+          geom_col(data = trajmwss[order(mean), tail(.SD,5), by = variable],
+                   aes(node, mean, fill = variable),
+                   position = "dodge") +
+          geom_errorbar(aes(node,
+                            mean,
+                            ymin = ifelse((mean-sd) < 0, 0, (mean-sd)),
+                            ymax = mean+sd,
+                            group = variable),
+                        position = "dodge") +
+          labs(x = "Service", y = "Peak daily incidence") +
+          theme_bw() +
+          theme(axis.text.x = element_text(angle=45, hjust=1, size = 5)) +
+          guides(fill = "none")
+        #try displaying top 10 only maybe, then rest in grey? to clearly show where highest burden is
+
+        print(p)
+        return(p)
+      }
+
+      simple_plot_peak(trajmwss = model()[["trajmwss"]])
 
     }
 
-    output$pOutbreak <- renderPlot({
-      mypOutbreak()
+    output$pPeak <- renderPlot({
+      mypPeak()
     })
 
     # downloadHandler contains 2 arguments as functions, namely filename, content
-    output$down_pOutbreak <- downloadHandler(
+    output$down_pPeak <- downloadHandler(
       filename =  function() {
-        paste("outbreak_probability", input$formatP1, sep = ".")
+        paste("outbreak_probability", "png", sep = ".")
       },
       # content is a function with argument file. content writes the plot to the device
       content = function(file) {
-        if (input$formatP1 == "png")
-          png(file, res = 150,
-              width = input$widthP1,
-              height = input$heightP1
-              ) # open the png device
-        else
-          pdf(file) # open the pdf device
+        png(file, res = 150,
+            width = 700,
+            height = 500
+        ) # open the png device
 
-        mypOutbreak()
+        mypPeak()
 
         # draw the plot
         dev.off()  # turn the device off
       }
     )
 
+
+    #########
+    ######### Network plot
+    #########
+
     ## a plot function
     mynosoHazard <- function() {
-      if (input$nosolegcol == 1)
-        maxcolors <- input$nlegcolnosoHaza
-      else
-        maxcolors <- FALSE
+      # if (input$nosolegcol == 1)
+      #   maxcolors <- input$nlegcolnosoHaza
+      # else
+      #   maxcolors <- FALSE
+      maxcolors = 5 #paramByDefaultVSimp
 
       plot_nosoHazard(
-        trajmwss = model(),
-        ward_names = variable$ward_names,
-        pop_size_P = variable$pop_size_P,
-        LS = variable$LS,
-        matContact = variable$matContact,
-        layout = input$nosoHazalayout,
-        vertexsize = input$nosoHazavertexsize,
-        vertexlabelsize = input$nosoHazavertexlabelsize,
-        edgearrowsize = input$nosoHazaedgearrowsize,
+        trajmwss = model()[["trajmwss"]],
+        ward_names = model()[["ward_names"]],
+        pop_size_P = model()[["pop_size_P"]],
+        LS = model()[["LS"]],
+        matContact = model()[["matContact"]],
+        layout = "with_fr",  #input$nosoHazalayout, #paramByDefaultVSimp
+        vertexsize = 0.5,  #input$nosoHazavertexsize, #paramByDefaultVSimp
+        vertexlabelsize = 0.03, #input$nosoHazavertexlabelsize, #paramByDefaultVSimp
+        edgearrowsize = 0.4, #input$nosoHazaedgearrowsize, #paramByDefaultVSimp
         addtitle = TRUE,
         maxcolors = maxcolors,
         verbose = FALSE
       )
     }
-
 
     output$nosoHazard <- renderPlot({
       mynosoHazard()
@@ -447,16 +179,11 @@ plotsoutput <-
     # downloadHandler contains 2 arguments as functions, namely filename, content
     output$down_nosoHazard <- downloadHandler(
       filename =  function() {
-        paste("nosocomial_hazard", input$formatP2, sep = ".")
+        paste("nosocomial_hazard", "png" , sep = ".") #input$formatP2 replace by "png" #paramByDefaultVSimp
       },
       # content is a function with argument file. content writes the plot to the device
       content = function(file) {
-        if (input$formatP2 == "png")
-          png(file, res = 150,
-              width = input$widthP2,
-              height = input$heightP2) # open the png device
-        else
-          pdf(file) # open the pdf device
+        png(file)
 
         mynosoHazard()
 
@@ -470,11 +197,12 @@ plotsoutput <-
     ######### Cumulative incidences
     #########
 
+
     output$iter_choiceInc <- renderUI({
       selectInput(
         inputId = ns("iter_inc"),
         label = "Select a simulation",
-        choices = seq(length(model()))
+        choices = seq(length(model()[["trajmwss"]]))
       )
     })
 
@@ -482,68 +210,231 @@ plotsoutput <-
       selectInput(
         inputId = ns("ward_inc"),
         label = "Select a ward",
-        choices = variable$ward_names
+        choices = model()[["ward_names"]]
       )
     })
 
+    #QL edit here to use simple version
 
-    myIncidence <- function() {
-      ward = FALSE
+    myIncidence <- function(x){
 
-      if (isTRUE(input$iterInc) |  length(input$display_sdInc) == 0)
-        display_sdInc <- FALSE
-      else
-        display_sdInc <- input$display_sdInc
+      simple_plot_incidence1 = function(trajmwss){
 
-      if (input$scaleInc == 1 &
-          isTRUE(input$wardInc) & length(input$ward_inc) > 0)
-        ward = input$ward_inc
+        n_it <- seq(length(trajmwss))
 
-      if (input$iterInc == 1 & length(input$iter_inc) > 0)
-        iter = input$iter_inc %>% as.numeric
-      else
-        iter = FALSE
+        # add iteration
+        trajmwss <- lapply(n_it, function(sim) {
+          trajmwss[[sim]][, `:=`(iteration = sim)]
+          trajmwss[[sim]]
+        })
 
-      if (input$popInc == "P+H" | length(input$popInc) == 0)
-        pop = FALSE
-      else
-        pop = input$popInc
+        trajmwss %<>% do.call(rbind, .)
 
-      scale = input$scaleInc
-      display_sd = display_sdInc
+        setDT(trajmwss)
 
-      plot_incidence(
-        trajmwss = model(),
-        scale = scale,
-        pop = pop,
-        iter = iter,
-        ward = ward,
-        display_sd = display_sdInc
-      )
+        trajmwss[, `:=`(casImpP = sum(admE, admEA, admES, admIA, admIM, admIS),
+                        casImpH = infHout),
+                 by = c("iteration", "node","time")]
+
+        trajmwss %<>% .[, c("time","node", "iteration", "casImpP", "casImpH", "infP", "infH"), with=FALSE]
+
+        trajmwss[, `:=`(casImpP = c(0,diff(casImpP)),
+                        casImpH = c(0,diff(casImpH)),
+                        infP = c(0,diff(infP)),
+                        infH = c(0,diff(infH))),
+                 by = c("node", "iteration")]
+
+        trajmwss %<>% melt(., id.vars = c("time" , "node" , "iteration"))
+
+        trajmwss[, `:=`(value = sum(value)),
+                 by = c("time", "iteration", "variable")]
+
+        trajmwss %<>% .[, c("time", "variable", "value"), with=FALSE]
+
+        trajmwss[, `:=`(mean = mean(value),
+                        sd = sd(value)),
+                 by = c("time", "variable")]
+
+
+        p <- ggplot(trajmwss, aes(x=time, y=value, group=variable, color = variable, fill = variable)) +
+          geom_smooth(span = 0.5) +
+          geom_point(data = trajmwss[mean != 0], aes(x=time, y=mean, group=variable, color = variable)) +
+          xlab("Time (day)") +
+          ylab("Avearge daily number of cases") +
+          scale_fill_manual(values =  c("#f6ec23", "#f68323", "#6495ED", "#CCCCFF"),
+                            name = "",
+                            limits = c("casImpP", "infP","casImpH", "infH"),
+                            labels = c("Imported (patients)",
+                                       "Nosocomial (patients)",
+                                       "Imported (healthcare workers)",
+                                       "Nosocomial (healthcare workers)"
+                            )) +
+          scale_colour_manual(values =  c("#f6ec23", "#f68323", "#6495ED", "#CCCCFF"),
+                              name = "",
+                              limits = c("casImpP", "infP","casImpH", "infH"),
+                              labels = c("Imported (patients)",
+                                         "Nosocomial (patients)",
+                                         "Imported (healthcare workers)",
+                                         "Nosocomial (healthcare workers)"
+                              )
+          )
+
+        print(p)
+        return(p)
+      }
+
+      simple_plot_incidence2 = function(trajmwss){
+        n_it <- seq(length(trajmwss))
+
+        # add iteration
+        trajmwss <- lapply(n_it, function(sim) {
+          trajmwss[[sim]][, `:=`(iteration = sim)]
+          trajmwss[[sim]]
+        })
+
+        trajmwss %<>% do.call(rbind, .)
+
+        setDT(trajmwss)
+
+        trajmwss[, `:=`(casImpP = sum(admE, admEA, admES, admIA, admIM, admIS),
+                        casImpH = infHout),
+                 by = c("iteration", "node","time")]
+
+        trajmwss %<>% .[, c("time","node", "iteration", "casImpP", "casImpH", "infP", "infH"), with=FALSE]
+
+        trajmwss[, `:=`(casImpP = c(0,diff(casImpP)),
+                        casImpH = c(0,diff(casImpH)),
+                        infP = c(0,diff(infP)),
+                        infH = c(0,diff(infH))),
+                 by = c("node", "iteration")]
+
+        trajmwss %<>% melt(., id.vars = c("time" , "node" , "iteration"))
+
+        trajmwss[, `:=`(value = sum(value)),
+                 by = c("time", "iteration", "variable")]
+
+        trajmwss[, node := NULL]
+
+        trajmwss %<>% unique
+
+        # New facet label names for supp variable
+        var_labs <- c("Patients: imported cases", "Healthcare workers: imported cases",
+                      "Patients: nosocomial cases", "Healthcare workers: nosocomial cases")
+        names(var_labs) <- trajmwss$variable %>% unique
+
+        # Create the plot
+        p <- ggplot(trajmwss) +
+          geom_line(aes(x=time, y=value, group=factor(iteration), colour = factor(iteration)), linewidth = 0.1, alpha = 0.5) +
+          # geom_smooth(aes(x=time, y=value), span = 0.5) +
+          facet_wrap(. ~ variable,
+                     labeller = labeller(variable = var_labs)) +
+          theme(legend.position = "none") + theme_bw()
+
+        print(p)
+        return(p)
+      }
+
+      simple_plot_incidence3 = function(trajmwss){
+        n_it <- seq(length(trajmwss))
+
+        # add iteration
+        trajmwss <- lapply(n_it, function(sim) {
+          trajmwss[[sim]][, `:=`(iteration = sim)]
+          trajmwss[[sim]]
+        })
+
+        trajmwss %<>% do.call(rbind, .)
+
+        setDT(trajmwss)
+
+        trajmwss[, `:=`(casImpP = sum(admE, admEA, admES, admIA, admIM, admIS),
+                        casImpH = infHout)]
+
+        trajmwss %<>% .[, c("time","node", "iteration", "casImpP", "casImpH", "infP", "infH"), with=FALSE]
+
+        trajmwss[, `:=`(casImpP = c(0,diff(casImpP)),
+                        casImpH = c(0,diff(casImpH)),
+                        infP = c(0,diff(infP)),
+                        infH = c(0,diff(infH))),
+                 by = c("node", "iteration")]
+
+        trajmwss[, `:=`(infections = casImpP + casImpH + infP + infH)]
+
+        trajmwss %<>% .[, c("time","node", "iteration", "infections"), with=FALSE]
+
+        # trajmwss %<>% melt(., id.vars = c("time" , "node" , "iteration"))
+
+        trajmwss[, `:=`(infections = sum(infections)),
+                 by = c("time", "iteration")]
+
+        trajmwss[, node := NULL]
+
+        trajmwss %<>% unique
+
+        trajmwss[, `:=`(mean = mean(infections),
+                        sd = sd(infections),
+                        yhat_lower = quantile(infections, 0.025),
+                        yhat_upper = quantile(infections, 0.925)),
+                 by = c("time")]
+
+        p <- ggplot(trajmwss) +
+          # geom_point() +
+          geom_ribbon(aes(x=time, ymin = yhat_lower, ymax = yhat_upper),
+                      alpha = 0.3,
+                      na.rm = TRUE,
+                      fill = "#f68323") +
+          geom_line(data = trajmwss[iteration %in% 1:4],
+                    aes(x=time, y=infections, group=factor(iteration),
+                        color = factor(iteration)), linewidth = .2) +
+          xlab("Time (day)") +
+          ylab("Avearge daily number of cases") +
+          theme(panel.background = element_rect(fill = "white", colour = "grey50")) +
+          guides(color="none")
+
+        print(p)
+        return(p)
+      }
+
+      if(x == 1)
+        simple_plot_incidence1(trajmwss = model()[["trajmwss"]])
+
+      if(x == 2)
+        simple_plot_incidence2(trajmwss = model()[["trajmwss"]])
+
+      if(x == 3)
+        simple_plot_incidence3(trajmwss = model()[["trajmwss"]])
+
     }
 
-    output$plotIncidence <- renderPlot({
-      myIncidence()
+    output$plotIncidence1 <- renderPlot({
+      myIncidence(1)
+    })
+
+
+    output$plotIncidence2 <- renderPlot({
+      myIncidence(2)
+    })
+
+    output$plotIncidence3 <- renderPlot({
+      myIncidence(3)
     })
 
     # downloadHandler contains 2 arguments as functions, namely filename, content
     output$down_Incidence <- downloadHandler(
       filename =  function() {
-        paste("daily_incidence", input$formatP3, sep = ".")
+        paste("daily_cases", "png", sep = ".") #edited to remove call to input$formatP3
       },
       # content is a function with argument file. content writes the plot to the device
       content = function(file) {
-        if (input$formatP3 == "png")
-          png(file) # open the png device
-        else
-          pdf(file) # open the pdf device
+        png(file) # open the png device
 
-        myIncidence()
+        myIncidence(3)
 
         # draw the plot
         dev.off()  # turn the device off
       }
     )
+
 
     #########
     ######### Daily test boxplot
@@ -553,7 +444,7 @@ plotsoutput <-
       selectInput(
         inputId = ns("iter_test"),
         label = "Select a simulation",
-        choices = seq(length(model()))
+        choices = seq(length(model()[["trajmwss"]]))
       )
     })
 
@@ -561,7 +452,7 @@ plotsoutput <-
       selectInput(
         inputId = ns("ward_test"),
         label = "Select a ward",
-        choices = variable$ward_names
+        choices = model()[["ward_names"]]
       )
     })
 
@@ -577,39 +468,15 @@ plotsoutput <-
     })
 
     myTestcounter <- function() {
-      ward = FALSE
-
-      if (input$scaleTest == 1 &
-          isTRUE(input$wardTest) & length(input$ward_test) > 0)
-        ward = input$ward_test
-
-
-      if (input$iterTest == 1 & length(input$iter_test) > 0)
-        iter = input$iter_test %>% as.numeric
-      else
-        iter = FALSE
-
-      if (input$popTest == "P+H")
-        pop = NULL
-      else
-        pop = input$popTest
-
-
-      if (input$agrtest == 0 | length(input$daysint) == 0)
-        daysint = 1
-      else
-        daysint = input$daysint
-
-      scale = input$scaleTest %>% as.numeric
 
       plot_testcount(
-        trajmwss = model(),
-        scale = scale,
-        pop = pop,
-        iter = iter,
-        ward = ward,
-        daysint = daysint
-      )
+        trajmwss = model()[["trajmwss"]],
+        scale = 0, #scale,
+        pop = NULL, #pop,
+        iter = FALSE, #iter,
+        ward = FALSE, #ward,
+        daysint = 7 #daysint
+      ) + theme_bw()
 
     }
 
@@ -621,14 +488,11 @@ plotsoutput <-
     # downloadHandler contains 2 arguments as functions, namely filename, content
     output$down_nTest <- downloadHandler(
       filename =  function() {
-        paste("daily_test_counter", input$formatP4, sep = ".")
+        paste("daily_test_counter", "png", sep = ".")
       },
       # content is a function with argument file. content writes the plot to the device
       content = function(file) {
-        if (input$formatP4 == "png")
-          png(file) # open the png device
-        else
-          pdf(file) # open the pdf device
+        png(file) # open the png device
 
         myTestcounter()
 

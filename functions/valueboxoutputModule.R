@@ -20,12 +20,16 @@ valueboxoutput <- function(input, output, session, model) {
 
   output$nosoH <- renderValueBox({
     valueBox(
-      ifelse("mwss" %in% class(model()),
-             keyoutput(model(),
-                     scale = 0,
-                     focus = "infections")$H$quantiles_noso[["50%"]],
+      ifelse("mwss" %in% class(model()[["trajmwss"]]),
+             paste (keyoutput(model()[["trajmwss"]],
+                             scale = 0,
+                             focus = "infections")$H$quantiles_noso[["50%"]] %>% ceiling," (",
+                   keyoutput(model()[["trajmwss"]],
+                             scale = 0,
+                             focus = "infections")$H$quantiles_out[["50%"]] %>% ceiling
+                   ,")"),
              ""),
-      HTML("Number of nosocomial  <br/> infection among professionals"),
+      HTML("Number of nosocomial (imported)  <br/> infections among professionals"),
       icon = icon("user-md", verify_fa = FALSE),
       color = "red",
       width = NULL
@@ -34,12 +38,16 @@ valueboxoutput <- function(input, output, session, model) {
 
   output$nosoP <- renderValueBox({
     valueBox(
-      ifelse("mwss" %in% class(model()),
-             keyoutput(model(),
+      ifelse("mwss" %in% class(model()[["trajmwss"]]),
+             paste (keyoutput(model()[["trajmwss"]],
                      scale = 0,
-                     focus = "infections")$P$quantiles_noso[["50%"]],
+                     focus = "infections")$P$quantiles_noso[["50%"]] %>% ceiling," (",
+                   keyoutput(model()[["trajmwss"]],
+                             scale = 0,
+                             focus = "infections")$P$quantiles_intro[["50%"]] %>% ceiling
+                   ,")"),
              ""),
-      HTML("Number of nosocomial  <br/> infection among patients"),
+      HTML("Number of nosocomial (imported)  <br/> infections among patients"),
       icon = icon("bed",
                   verify_fa = FALSE),
       color = "red",
@@ -51,10 +59,10 @@ valueboxoutput <- function(input, output, session, model) {
   output$nSev <- renderValueBox({
     valueBox(
       ifelse(
-        "mwss" %in% class(model()),
-        keyoutput(model(),
+        "mwss" %in% class(model()[["trajmwss"]]),
+        keyoutput(model()[["trajmwss"]],
                 scale = 0,
-                focus = "incidence")$incidence[, incPS] %>%  median,
+                focus = "incidence")$incidence[, incPS] %>%  median %>% ceiling,
         ""
       ),
       HTML("Number of severe cases <br/>among patients"),
@@ -65,14 +73,14 @@ valueboxoutput <- function(input, output, session, model) {
     )
   })
 
-  # number of test FIX ME split patient / HCWS
+  # number of test
   output$ntestP <- renderValueBox({
     valueBox(
       ifelse(
-        "mwss" %in% class(model()),
-          keyoutput(model(),
+        "mwss" %in% class(model()[["trajmwss"]]),
+          keyoutput(model()[["trajmwss"]],
                 scale = 0,
-                focus = "test")$quantilesP[["50%"]],
+                focus = "test")$quantilesP[["50%"]] %>% ceiling,
         ""
       ),
       HTML("Number of tests of patients <br/> "),
@@ -86,10 +94,10 @@ valueboxoutput <- function(input, output, session, model) {
   output$ntestH <- renderValueBox({
     valueBox(
       ifelse(
-        "mwss" %in% class(model()),
-        keyoutput(model(),
+        "mwss" %in% class(model()[["trajmwss"]]),
+        keyoutput(model()[["trajmwss"]],
                 scale = 0,
-                focus = "test")$quantilesH[["50%"]],
+                focus = "test")$quantilesH[["50%"]] %>% ceiling,
         ""
       ),
       HTML("Number of tests of professionals <br/> "),
@@ -106,16 +114,15 @@ valueboxoutput <- function(input, output, session, model) {
 
     valueBox(
       ifelse(
-        "mwss" %in% class(model()),
-        ifelse("ISO" %in% class(model()),
-               keyoutput(model(),
-                         scale = 0)$ISO$quantiles[["50%"]], 0),
+        "mwss" %in% class(model()[["trajmwss"]]),
+        ifelse("ISO" %in% class(model()[["trajmwss"]]),
+               keyoutput(model()[["trajmwss"]],
+                         scale = 0)$ISO$quantiles[["50%"]] %>% ceiling, 0),
         ""
       ),
       HTML(
-        "Maximal number of beds <br/>simulataneously under confinement"
+        "Maximal number of beds <br/>simultaneously under confinement"
       ),
-      # "Maximal number of beds simulataneously under confinement",
       icon = icon("bed",
                   verify_fa = FALSE),
       color = "green",
@@ -127,13 +134,13 @@ valueboxoutput <- function(input, output, session, model) {
   output$SL <- renderValueBox({
     valueBox(
       ifelse(
-        "mwss" %in% class(model()),
-        keyoutput(model(),
-                scale = 0)$SL$quantiles[["50%"]],
+        "mwss" %in% class(model()[["trajmwss"]]),
+        keyoutput(model()[["trajmwss"]],
+                scale = 0)$SL$quantiles[["50%"]] %>% ceiling,
         ""
       ),
       HTML(
-        "Maximal number of professionals <br/>simulataneously in sick leave"
+        "Maximal number of professionals <br/>simultaneously in sick leave"
       ),
       icon = icon("user-md", verify_fa = FALSE),
       color = "green",

@@ -8,36 +8,21 @@ sidebar <- dashboardSidebar(
   sidebarMenu(
     id = "sidebarMenu",
 
-    menuItem("Presentation", icon = icon("book",
-                                         verify_fa = FALSE), tabName = "PRS"),
-
-    #################
-    #################
-    ### Structure ###
-    #################
-    #################
-
-    menuItem("Initialization", icon = icon("gears",
-                                      verify_fa = FALSE), tabName = "INI"),
+    menuItem("Presentation",
+             icon = icon("book", verify_fa = FALSE),
+             tabName = "PRS"),
 
 
-    ###################
-    ###################
-    ### Simulations ###
-    ###################
-    ###################
+    ################
+    ### VERSIONS ###
+    ################
 
-    menuItem("Simulation", icon = icon("play",
-                                       verify_fa = FALSE), tabName = "SIM"),
-    
-    ##################################
-    ##################################
-    ### Epidemiological parameters ###
-    ##################################
-    ##################################
-
-
-    menuItem("More parameters", icon = icon("fas fa-sliders-h", verify_fa = FALSE), tabName = "PARAMS"),
+    ###
+    ### Sidebar
+    ###
+    menuItem("Simulations", icon = icon("play",
+                                                verify_fa = FALSE),
+                     tabName = "simulation_sidetab"),
 
     #############
     #############
