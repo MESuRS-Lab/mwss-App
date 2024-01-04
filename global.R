@@ -1,42 +1,31 @@
 # Load and if necessary install packages
+# install.packages('remotes')
+remotes::install_github("statnet/statnet.common")
 
-install.packages(c('digest', 'remotes', "rmarkdown", "tinytex","shiny", 
-                   "dplyr", "DT",
-                   "ggplot2", "statnet", "igraph",
-                   "network", "shinydashboard", "shinyjs",
-                   "plotly", "magrittr", "SimInf", "data.table",
-                   "shinyWidgets",
-                   "dipsaus","shinyhelper", "shinyTime", 
-                   "shinyalert", "knitr"), dependencies = TRUE)
-
-# #list of packages required
-# list.of.packages <- c('digest', 'remotes', "rmarkdown", "tinytex","shiny", 
-#                       "dplyr", "DT",
-#                       "ggplot2", "statnet", "igraph",
-#                       "network", "shinydashboard", "shinyjs",
-#                       "plotly", "magrittr", "SimInf", "data.table",
-#                       "shinyWidgets",
-#                       "dipsaus","shinyhelper", "shinyTime", 
-#                       "shinyalert", "knitr")
-
-#checking missing packages from list
-# new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
-# 
-# #install missing ones
-# if(length(new.packages)) install.packages(new.packages, dependencies = TRUE)
-# 
-# sapply(list.of.packages, function(pck){
-#   require(pck, character.only = TRUE)
-#   })
-# 
-# outdatedpck <- old.packages()
-# if(TRUE %in% (list.of.packages %in% outdatedpck))
-#   warning(paste("You might need to update the following packages:",
-#                 paste(list.of.packages[which(list.of.packages %in% outdatedpck)], collapse = ", ")))
+remotes::install_cran('rmarkdown')
+remotes::install_cran('tinytex')
+remotes::install_cran('shiny')
+remotes::install_cran('dplyr')
+remotes::install_cran('DT')
+remotes::install_cran('ggplot2')
+remotes::install_cran('statnet')
+remotes::install_cran('igraph')
+remotes::install_cran('network')
+remotes::install_cran('shinydashboard')
+remotes::install_cran('shinyjs')
+remotes::install_cran('plotly')
+remotes::install_cran('magrittr')
+remotes::install_cran('SimInf')
+remotes::install_cran('data.table')
+remotes::install_cran('shinyWidgets')
+remotes::install_cran('dipsaus')
+remotes::install_cran('shinyhelper')
+remotes::install_cran('shinyTime')
+remotes::install_cran('shinyalert')
+remotes::install_cran('knitr')
 
 remotes::install_github("MESuRS-Lab/mwss", quiet = T)
 
-library('digest')
 library('remotes')
 library('rmarkdown')
 library('tinytex')
