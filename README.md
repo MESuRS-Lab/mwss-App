@@ -69,7 +69,7 @@ mwss-App
 The package mwss developed simultaneously should always be up to date with the online version.
 
 ````
-library(devtools)
+library(remotes)
 install_github("MESuRS-Lab/mwss")
 ````
 

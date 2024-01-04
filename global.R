@@ -1,28 +1,65 @@
 # Load and if necessary install packages
-#list of packages required
-list.of.packages <- c('digest', "rmarkdown", "tinytex","shiny", "dplyr", "DT",
-                      "ggplot2", "statnet", "igraph",
-                      "network", "shinydashboard", "shinyjs",
-                      "plotly", "magrittr", "SimInf", "data.table", "shinyWidgets",
-                      "dipsaus","shinyhelper", "shinyTime", "shinyalert", "knitr", "devtools")
+
+install.packages(c('digest', 'remotes', "rmarkdown", "tinytex","shiny", 
+                   "dplyr", "DT",
+                   "ggplot2", "statnet", "igraph",
+                   "network", "shinydashboard", "shinyjs",
+                   "plotly", "magrittr", "SimInf", "data.table",
+                   "shinyWidgets",
+                   "dipsaus","shinyhelper", "shinyTime", 
+                   "shinyalert", "knitr"), dependencies = TRUE)
+
+# #list of packages required
+# list.of.packages <- c('digest', 'remotes', "rmarkdown", "tinytex","shiny", 
+#                       "dplyr", "DT",
+#                       "ggplot2", "statnet", "igraph",
+#                       "network", "shinydashboard", "shinyjs",
+#                       "plotly", "magrittr", "SimInf", "data.table",
+#                       "shinyWidgets",
+#                       "dipsaus","shinyhelper", "shinyTime", 
+#                       "shinyalert", "knitr")
 
 #checking missing packages from list
-new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+# new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+# 
+# #install missing ones
+# if(length(new.packages)) install.packages(new.packages, dependencies = TRUE)
+# 
+# sapply(list.of.packages, function(pck){
+#   require(pck, character.only = TRUE)
+#   })
+# 
+# outdatedpck <- old.packages()
+# if(TRUE %in% (list.of.packages %in% outdatedpck))
+#   warning(paste("You might need to update the following packages:",
+#                 paste(list.of.packages[which(list.of.packages %in% outdatedpck)], collapse = ", ")))
 
-#install missing ones
-if(length(new.packages)) install.packages(new.packages, dependencies = TRUE)
+remotes::install_github("MESuRS-Lab/mwss", quiet = T)
 
-sapply(list.of.packages, function(pck){
-  require(pck, character.only = TRUE)
-  })
-
-outdatedpck <- old.packages()
-if(TRUE %in% (list.of.packages %in% outdatedpck))
-  warning(paste("You might need to update the following packages:",
-                paste(list.of.packages[which(list.of.packages %in% outdatedpck)], collapse = ", ")))
-
-install_github("MESuRS-Lab/mwss", quiet = T)
-library("mwss")
+library('digest')
+library('remotes')
+library('rmarkdown')
+library('tinytex')
+library('shiny')
+library('dplyr')
+library('DT')
+library('ggplot2')
+library('statnet')
+library('igraph')
+library('network')
+library('shinydashboard')
+library('shinyjs')
+library('plotly')
+library('magrittr')
+library('SimInf')
+library('data.table')
+library('shinyWidgets')
+library('dipsaus')
+library('shinyhelper')
+library('shinyTime')
+library('shinyalert')
+library('knitr')
+library('mwss')
 
 # Parameters dataset
 
