@@ -1,6 +1,6 @@
 # Load and if necessary install packages
 #list of packages required
-list.of.packages <- c( "rmarkdown", "tinytex","shiny", "dplyr", "DT",
+list.of.packages <- c('digest', "rmarkdown", "tinytex","shiny", "dplyr", "DT",
                       "ggplot2", "statnet", "igraph",
                       "network", "shinydashboard", "shinyjs",
                       "plotly", "magrittr", "SimInf", "data.table", "shinyWidgets",
