@@ -2,6 +2,7 @@
 # install.packages('remotes')
 remotes::install_github("statnet/statnet.common")
 
+remotes::install_cran('renv')
 remotes::install_cran('rmarkdown')
 remotes::install_cran('tinytex')
 remotes::install_cran('shiny')
@@ -26,7 +27,6 @@ remotes::install_cran('knitr')
 
 remotes::install_github("MESuRS-Lab/mwss", quiet = T)
 
-library('remotes')
 library('rmarkdown')
 library('tinytex')
 library('shiny')
